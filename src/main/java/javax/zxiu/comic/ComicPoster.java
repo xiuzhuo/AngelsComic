@@ -37,9 +37,10 @@ public class ComicPoster extends Application {
 //        Dummy.testReadInputFile();
 //        Dummy.testLoadPage();
 //        Dummy.testConnect();
+//        Dummy.testJS();
 //        launch(args);
-
-        ParseUtils.getAllComics();
+Dummy.testGetComicInformation();
+//        ParseUtils.getAllComics();
     }
 
     @Override
