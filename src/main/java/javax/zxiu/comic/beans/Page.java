@@ -6,12 +6,20 @@ import java.util.Date;
  * Created by Zhuo Xiu on 04/08/15.
  */
 public class Page {
-
+    private int index;
     private String url;
     private String image_url;
     private String file_path;
     private Date download_date;
     private Date upload_date;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public String getUrl() {
         return url;
@@ -53,4 +61,15 @@ public class Page {
         this.upload_date = upload_date;
     }
 
+    @Override
+    public String toString() {
+        return "Page{" +
+                "index=" + index +
+                ", url='" + url + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", file_path='" + file_path + '\'' +
+                ", download_date=" + download_date +
+                ", upload_date=" + upload_date +
+                '}';
+    }
 }

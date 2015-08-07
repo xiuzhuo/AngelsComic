@@ -19,7 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
-import javax.zxiu.comic.utils.ParseUtils;
+import javax.zxiu.comic.tasks.DownloadTask;
 
 /**
  * Created by Zhuo Xiu on 04/08/15.
@@ -33,13 +33,15 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        DownloadTask.parseBook(DownloadTask.parseComic(DownloadTask.parseInput(), 0),0);
+
 //        Dummy.testDownload();
 //        Dummy.testReadInputFile();
 //        Dummy.testLoadPage();
 //        Dummy.testConnect();
 //        Dummy.testJS();
 //        launch(args);
-Dummy.testGetComicInformation();
+//Dummy.testGetComicInformation();
 //        ParseUtils.getAllComics();
     }
 

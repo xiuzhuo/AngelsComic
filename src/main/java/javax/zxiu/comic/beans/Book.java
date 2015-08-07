@@ -12,7 +12,7 @@ public class Book {
     private String url;
     private Date download_date;
     private Date upload_date;
-    private int page_count;
+    private int last_page;
     private Page[] pages = new Page[0];
 
     public String getName() {
@@ -47,12 +47,12 @@ public class Book {
         this.upload_date = upload_date;
     }
 
-    public int getPage_count() {
-        return page_count;
+    public int getLast_page() {
+        return last_page;
     }
 
-    public void setPage_count(int page_count) {
-        this.page_count = page_count;
+    public void setLast_count(int last_page) {
+        this.last_page = last_page;
     }
 
     public Page[] getPages() {
@@ -70,7 +70,7 @@ public class Book {
                 ", url='" + url + '\'' +
                 ", download_date=" + download_date +
                 ", upload_date=" + upload_date +
-                ", page_count=" + page_count +
+                ", last_page=" + last_page +
                 ", pages=" + Arrays.toString(pages) +
                 '}';
     }

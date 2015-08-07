@@ -53,6 +53,10 @@ public class IOUtils {
         return null;
     }
 
+    public static String readFromFile(String filePath) {
+        return readFromFile(new File(filePath));
+    }
+
     public static String readFromFile(File file) {
         StringBuilder builder = new StringBuilder();
         if (file != null || file.exists()) {
@@ -67,4 +71,36 @@ public class IOUtils {
         }
         return builder.toString();
     }
+
+
+    // convert InputStream to String
+    public static String InputStreamToString(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+
+    }
+
 }

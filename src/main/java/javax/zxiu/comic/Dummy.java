@@ -3,16 +3,19 @@ package javax.zxiu.comic;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
+import org.apache.http.message.BasicHeader;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.zxiu.comic.utils.IOUtils;
+import javax.zxiu.comic.utils.NetworkUtils;
 import javax.zxiu.comic.utils.ParseUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,7 +36,11 @@ public class Dummy {
 
 
     public static void testDownload() {
-        String url = "http://manhua1025.104-250-152-74.cdndm5.com/17/16656/216286/2_3997.jpg?cid=216286&key=5235e87ad8b4d1900017e3492b30ff86";
+        String url = "http://manhua1025.146-71-123-50.cdndm5.com/17/16656/216286/1_4828.jpg?cid=216286&key=8a7242c45e67ec73f81b1cda91662ed1";
+        NetworkUtils.download(url, new Header[]{new BasicHeader("Referer", "http://www.dm5.com/m216286/"),new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, "2_3997_3_4.jpg");
+        if (true) {
+            return;
+        }
         CloseableHttpAsyncClient client = HttpAsyncClients.createDefault();
         System.out.println(System.getProperty("java.version"));
         File file = new File("2_3997_3_4.jpg");
@@ -89,15 +96,18 @@ public class Dummy {
         CloseableHttpAsyncClient client = HttpAsyncClients.createDefault();
         client.start();
         final HttpGet request = new HttpGet(url1);
-//        Future<HttpResponse> future = client.execute(request, null);
+        Future<HttpResponse> future = client.execute(request, null);
         try {
-//            HttpResponse response = future.get();
-//            System.err.println(IOUtils.writeToString(response.getEntity().getContent()));
+            HttpResponse response = future.get();
+            System.err.println(IOUtils.writeToString(response.getEntity().getContent()));
             for (int i = 1; i < pages; i++) {
                 String url2 = "http://www.dm5.com/m216286p" + i + "/chapterimagefun.ashx?cid=216286&page=" + i +
                         "&language=1&key=";
                 System.out.println(url2);
                 HttpGet request2 = new HttpGet(url2);
+//                request2.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0");
+                request2.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.130 Safari/537.36");
+                System.out.println(request2.getAllHeaders().length);
                 Future<HttpResponse> future2 = client.execute(request2, null);
                 HttpResponse response2 = future2.get();
                 System.out.println(IOUtils.writeToString(response2.getEntity().getContent()));
