@@ -33,7 +33,7 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DownloadTask.parseBook(DownloadTask.parseComic(DownloadTask.parseInput(), 0),0);
+        DownloadTask.parseAllBooks(DownloadTask.parseComic(DownloadTask.parseInput(), 0));
 
 //        Dummy.testDownload();
 //        Dummy.testReadInputFile();

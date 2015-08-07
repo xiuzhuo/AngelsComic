@@ -6,6 +6,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.TextUtils;
+import sun.nio.ch.Net;
 
 import javax.zxiu.comic.Config;
 import javax.zxiu.comic.beans.AllComics;
@@ -29,14 +30,28 @@ import java.util.regex.Pattern;
  */
 public class DownloadTask {
 
-    public static Book parseBook(Comic comic, int index) {
+    public static Comic parseAllBooks(Comic comic) {
+        CountDownLatch countDownLatch = new CountDownLatch(comic.getBooks().length);
+        for (int i = 0; i < comic.getBooks().length; i++) {
+            parseBook(comic, i);
+            countDownLatch.countDown();
+        }
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.err.println(JSON.toJSONString(JSON.toJSON(comic), true));
+        return comic;
+    }
 
+    public static Comic parseBook(Comic comic, int index) {
         Book book = comic.getBooks()[index];
-        CountDownLatch countDownLatch=new CountDownLatch(book.getLast_page());
+        CountDownLatch countDownLatch = new CountDownLatch(book.getLast_page());
 
 
         String[] paths = book.getUrl().split("/");
-        List<Page> pageList=new ArrayList<>();
+        List<Page> pageList = new ArrayList<>();
         for (int i = 1; i <= book.getLast_page(); i++) {
             String url = paths[0] + "//" + paths[2] + "/" + paths[3] + "p" + i + "/chapterimagefun.ashx?cid=" + paths[3].substring(1, paths[3].length()) + "&page=" + i + "&language=1&key=";
 //            System.out.println(url);
@@ -45,13 +60,13 @@ public class DownloadTask {
                 @Override
                 public void completed(HttpResponse result) {
                     try {
-                        String url = JSUtils.unpack(IOUtils.InputStreamToString(result.getEntity().getContent()));
-                        Page page=new Page();
-                        page.setUrl(url);
+                        String image_download_url = JSUtils.unpack(IOUtils.InputStreamToString(result.getEntity().getContent()));
+                        Page page = new Page();
+                        page.setImage_download_url(image_download_url);
                         page.setIndex(finalI);
                         pageList.add(page);
                         countDownLatch.countDown();
-                        System.out.println(url);
+                        System.out.println(image_download_url);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -76,8 +91,23 @@ public class DownloadTask {
         book.setPages(pageList.toArray(book.getPages()));
 
 
-        System.err.println(book.toString());
-        return null;
+//        System.err.println(JSON.toJSONString(JSON.toJSON(comic), true));
+        return comic;
+    }
+
+    public static void downloadAllImages(Comic comic) {
+        int allPages = 0;
+        for (Book book : comic.getBooks()) {
+            for (Page page : book.getPages()) {
+                allPages++;
+            }
+        }
+        CountDownLatch countDownLatch=new CountDownLatch(allPages);
+
+    }
+
+    public static void downloadPage(Page page) {
+
     }
 
     public static Comic parseComic(AllComics allComics, int index) {

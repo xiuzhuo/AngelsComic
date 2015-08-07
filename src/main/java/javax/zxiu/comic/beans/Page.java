@@ -8,7 +8,8 @@ import java.util.Date;
 public class Page {
     private int index;
     private String url;
-    private String image_url;
+    private String image_download_url;
+    private String image_upload_url;
     private String file_path;
     private Date download_date;
     private Date upload_date;
@@ -29,12 +30,20 @@ public class Page {
         this.url = url;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImage_download_url() {
+        return image_download_url;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImage_download_url(String image_download_url) {
+        this.image_download_url = image_download_url;
+    }
+
+    public String getImage_upload_url() {
+        return image_upload_url;
+    }
+
+    public void setImage_upload_url(String image_upload_url) {
+        this.image_upload_url = image_upload_url;
     }
 
     public String getFile_path() {
@@ -66,7 +75,8 @@ public class Page {
         return "Page{" +
                 "index=" + index +
                 ", url='" + url + '\'' +
-                ", image_url='" + image_url + '\'' +
+                ", image_download_url='" + image_download_url + '\'' +
+                ", image_upload_url='" + image_upload_url + '\'' +
                 ", file_path='" + file_path + '\'' +
                 ", download_date=" + download_date +
                 ", upload_date=" + upload_date +

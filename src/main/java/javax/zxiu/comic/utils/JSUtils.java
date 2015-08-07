@@ -17,13 +17,22 @@ public class JSUtils {
 
     static ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
     static File jsfile = new File(JSUtils.class.getClassLoader().getResource("unpack.js").getPath());
-
-    public static String unpack(String code) {
-//        System.out.println("jsfile=" + jsfile + " " + jsfile.exists());
-        Object result=null;
+   static Invocable invocable = (Invocable) engine;
+    static{
         try {
             engine.eval(new FileReader(jsfile));
-            Invocable invocable = (Invocable) engine;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    static boolean inited=false;
+    public static String unpack(String code) {
+//        System.out.println("jsfile=" + jsfile + " " + jsfile.exists());
+
+        Object result=null;
+        try {
+
+            invocable = (Invocable) engine;
             result = invocable.invokeFunction("unpack", code);
 
             engine.eval((String) result);
@@ -31,7 +40,7 @@ public class JSUtils {
 //            for (Object r:(Object[])result){
 //                System.out.println(r);
 //            }
-        } catch (ScriptException | FileNotFoundException | NoSuchMethodException e) {
+        } catch (ScriptException  | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
