@@ -6,7 +6,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.TextUtils;
-import sun.nio.ch.Net;
 
 import javax.zxiu.comic.Config;
 import javax.zxiu.comic.beans.AllComics;
@@ -56,7 +55,7 @@ public class DownloadTask {
             String url = paths[0] + "//" + paths[2] + "/" + paths[3] + "p" + i + "/chapterimagefun.ashx?cid=" + paths[3].substring(1, paths[3].length()) + "&page=" + i + "&language=1&key=";
 //            System.out.println(url);
             final int finalI = i;
-            NetworkUtils.request(NetworkUtils.METHOD.GET, url, new Header[]{new BasicHeader("Referer", book.getUrl())}, new FutureCallback<HttpResponse>() {
+            NetworkUtils.get(url, new Header[]{new BasicHeader("Referer", book.getUrl())}, new FutureCallback<HttpResponse>() {
                 @Override
                 public void completed(HttpResponse result) {
                     try {
