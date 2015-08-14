@@ -1,9 +1,9 @@
 {
   "comics": [
     {
-      "name": "拳愿阿修罗",
+      "name": "三国农庄",
       "host": "http://www.dm5.com",
-      "url": "http://www.dm5.com/manhua-quanyuanaxiuluo/",
+      "url": "http://www.dm5.com/manhua-sanguonongzhuang/",
       "pattern": "<ul\\sid=\"cbc_\\d\"[\\s\\S]*?</ul>"
     }
   ]
