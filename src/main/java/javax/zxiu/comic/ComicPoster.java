@@ -19,6 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
+import javax.zxiu.comic.beans.AllComics;
 import javax.zxiu.comic.tasks.DownloadTask;
 
 /**
@@ -33,8 +34,11 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DownloadTask.parseAllBooks(DownloadTask.parseComic(DownloadTask.parseInput(), 0));
-
+        AllComics allComics = DownloadTask.parseInput();
+        if (allComics.getComics().length > 0) {
+            DownloadTask.parseAllBooks(DownloadTask.parseComic(allComics.getComics()[0]));
+        }
+        System.exit(1);
 //        Dummy.testDownload();
 //        Dummy.testReadInputFile();
 //        Dummy.testLoadPage();
@@ -80,19 +84,19 @@ public class ComicPoster extends Application {
     }
 
 
-    public static final String defaultURL="http://www.dm5.com/manhua-quanyuanaxiuluo/";
+    public static final String defaultURL = "http://www.dm5.com/manhua-quanyuanaxiuluo/";
 //    public static final String defaultURL="http://baidu.com";
 
-    private void init(Stage primaryStage){
-        final Stage stage=primaryStage;
-        Group group=new Group();//作为根节点，也就是root
+    private void init(Stage primaryStage) {
+        final Stage stage = primaryStage;
+        Group group = new Group();//作为根节点，也就是root
         primaryStage.setScene(new Scene(group));
 
-        WebView webView=new WebView();
-        final WebEngine engine=  webView.getEngine();
+        WebView webView = new WebView();
+        final WebEngine engine = webView.getEngine();
         engine.load(defaultURL);
 
-        final TextField textField=new TextField(defaultURL);
+        final TextField textField = new TextField(defaultURL);
         /**修改输入栏的地址，也就是访问那个网站，这个地址栏显示那个网站的地址
          * locationProperty()是获得当前页面的url封装好的ReadOnlyStringProperty对象
          */
@@ -105,10 +109,10 @@ public class ComicPoster extends Application {
         /**
          * 设置标题栏为当前访问页面的标题。
          */
-        engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>(){
+        engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
-                if(newValue==Worker.State.SUCCEEDED){
+                if (newValue == Worker.State.SUCCEEDED) {
                     stage.setTitle(engine.getTitle());
 
 
@@ -135,25 +139,25 @@ public class ComicPoster extends Application {
         });
 
         //加载新的地址
-        EventHandler<ActionEvent> handler= new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                engine.load(textField.getText().startsWith("http://")?textField.getText().trim():"http://"+textField.getText().trim());
+                engine.load(textField.getText().startsWith("http://") ? textField.getText().trim() : "http://" + textField.getText().trim());
             }
         };
 
         textField.setOnAction(handler);
 
-        Button okButton=new Button("go");
+        Button okButton = new Button("go");
         okButton.setDefaultButton(true);
         okButton.setOnAction(handler);
 
-        HBox hbox=new HBox();
-        hbox.getChildren().addAll(textField,okButton);
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(textField, okButton);
         HBox.setHgrow(textField, Priority.ALWAYS);
 
-        VBox vBox=new VBox();
-        vBox.getChildren().addAll(hbox,webView);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(hbox, webView);
         VBox.setVgrow(webView, Priority.ALWAYS);
 
         group.getChildren().add(vBox);

@@ -1,18 +1,35 @@
 package javax.zxiu.comic.beans;
 
+import java.io.File;
 import java.util.Date;
 
 /**
  * Created by Zhuo Xiu on 04/08/15.
  */
-public class Page {
+public class Page implements Comparable<Page> {
     private int index;
     private String url;
-    private String image_download_url;
-    private String image_upload_url;
-    private String file_path;
-    private Date download_date;
-    private Date upload_date;
+    private String imageDownloadUrl;
+    private String imageUploadUrl;
+    private long imageSize;
+    private File imageFile;
+    private String filePath;
+    private Date downloadDate;
+    private Date uploadDate;
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "index=" + index +
+                ", url='" + url + '\'' +
+                ", imageDownloadUrl='" + imageDownloadUrl + '\'' +
+                ", imageUploadUrl='" + imageUploadUrl + '\'' +
+                ", imageSize=" + imageSize +
+                ", filePath='" + filePath + '\'' +
+                ", downloadDate=" + downloadDate +
+                ", uploadDate=" + uploadDate +
+                '}';
+    }
 
     public int getIndex() {
         return index;
@@ -30,56 +47,64 @@ public class Page {
         this.url = url;
     }
 
-    public String getImage_download_url() {
-        return image_download_url;
+    public String getImageDownloadUrl() {
+        return imageDownloadUrl;
     }
 
-    public void setImage_download_url(String image_download_url) {
-        this.image_download_url = image_download_url;
+    public void setImageDownloadUrl(String imageDownloadUrl) {
+        this.imageDownloadUrl = imageDownloadUrl;
     }
 
-    public String getImage_upload_url() {
-        return image_upload_url;
+    public String getImageUploadUrl() {
+        return imageUploadUrl;
     }
 
-    public void setImage_upload_url(String image_upload_url) {
-        this.image_upload_url = image_upload_url;
+    public void setImageUploadUrl(String imageUploadUrl) {
+        this.imageUploadUrl = imageUploadUrl;
     }
 
-    public String getFile_path() {
-        return file_path;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setFile_path(String file_path) {
-        this.file_path = file_path;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
-    public Date getDownload_date() {
-        return download_date;
+    public long getImageSize() {
+        return imageSize;
     }
 
-    public void setDownload_date(Date download_date) {
-        this.download_date = download_date;
+    public void setImageSize(long imageSize) {
+        this.imageSize = imageSize;
     }
 
-    public Date getUpload_date() {
-        return upload_date;
+    public File getImageFile() {
+        return imageFile;
     }
 
-    public void setUpload_date(Date upload_date) {
-        this.upload_date = upload_date;
+    public void setImageFile(File imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public Date getDownloadDate() {
+        return downloadDate;
+    }
+
+    public void setDownloadDate(Date downloadDate) {
+        this.downloadDate = downloadDate;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     @Override
-    public String toString() {
-        return "Page{" +
-                "index=" + index +
-                ", url='" + url + '\'' +
-                ", image_download_url='" + image_download_url + '\'' +
-                ", image_upload_url='" + image_upload_url + '\'' +
-                ", file_path='" + file_path + '\'' +
-                ", download_date=" + download_date +
-                ", upload_date=" + upload_date +
-                '}';
+    public int compareTo(Page p) {
+        return index - p.index;
     }
 }

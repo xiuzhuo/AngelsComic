@@ -74,7 +74,7 @@ public class IOUtils {
 
 
     // convert InputStream to String
-    public static String InputStreamToString(InputStream is) {
+    public static String inputStreamToString(InputStream is) {
 
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();

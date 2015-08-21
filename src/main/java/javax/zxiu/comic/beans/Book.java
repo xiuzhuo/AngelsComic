@@ -7,20 +7,29 @@ import java.util.Date;
  * Created by Zhuo Xiu on 04/08/15.
  */
 
-public class Book {
-    private String name;
+public class Book implements Comparable<Book> {
+    private int index;
+    private String title;
     private String url;
     private Date download_date;
     private Date upload_date;
     private int last_page;
     private Page[] pages = new Page[0];
 
-    public String getName() {
-        return name;
+    public int getIndex() {
+        return index;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUrl() {
@@ -47,10 +56,6 @@ public class Book {
         this.upload_date = upload_date;
     }
 
-    public int getLast_page() {
-        return last_page;
-    }
-
     public void setLast_count(int last_page) {
         this.last_page = last_page;
     }
@@ -63,10 +68,19 @@ public class Book {
         this.pages = pages;
     }
 
+    public void setLast_page(int last_page) {
+        this.last_page = last_page;
+    }
+
+    public int getLast_page() {
+        return last_page;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
-                "name='" + name + '\'' +
+                "index=" + index +
+                ", title='" + title + '\'' +
                 ", url='" + url + '\'' +
                 ", download_date=" + download_date +
                 ", upload_date=" + upload_date +
@@ -76,4 +90,8 @@ public class Book {
     }
 
 
+    @Override
+    public int compareTo(Book book) {
+        return index - book.index;
+    }
 }

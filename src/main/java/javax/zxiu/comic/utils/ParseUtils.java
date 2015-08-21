@@ -47,7 +47,7 @@ public class ParseUtils {
                     String aText = ulText.substring(matcher1.start(), matcher1.end());
                     Book book = new Book();
                     int i0 = aText.indexOf("title=\"");
-                    book.setName(matchAttr(aText, "a", "title"));
+                    book.setTitle(matchAttr(aText, "a", "title"));
                     book.setUrl(comic.getHost() + matchAttr(aText, "a", "href"));
                     bookList.add(book);
                 }
@@ -81,12 +81,13 @@ public class ParseUtils {
     }
 
     public static String matchAttr(String source, String element, String attr) {
-        String reg = "<" + element + "[^<>]*?\\s" + attr + "=['\"](.*?)['\"]\\s.*?>";
+        String reg = "<" + element + "[^<>]*?\\s" + attr + "=['\"](.*?)['\"][^<>]*?>";
         Matcher m = Pattern.compile(reg).matcher(source);
         String result = null;
-        if (m.find()) {
-            result = m.group(1);
-        }
-        return result;
+        //System.out.println("m.find()="+m.find()+" m.group(1)="+m.group(1));
+//        if (m.find()) {
+//            result = m.group(1);
+//        }
+        return m.find()?m.group(1):null;
     }
 }
