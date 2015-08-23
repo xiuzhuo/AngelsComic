@@ -8,7 +8,6 @@ import java.util.Date;
  */
 public class Page implements Comparable<Page> {
     private int index;
-    private String url;
     private String imageDownloadUrl;
     private String imageUploadUrl;
     private long imageSize;
@@ -21,7 +20,6 @@ public class Page implements Comparable<Page> {
     public String toString() {
         return "Page{" +
                 "index=" + index +
-                ", url='" + url + '\'' +
                 ", imageDownloadUrl='" + imageDownloadUrl + '\'' +
                 ", imageUploadUrl='" + imageUploadUrl + '\'' +
                 ", imageSize=" + imageSize +
@@ -37,14 +35,6 @@ public class Page implements Comparable<Page> {
 
     public void setIndex(int index) {
         this.index = index;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getImageDownloadUrl() {
@@ -105,6 +95,6 @@ public class Page implements Comparable<Page> {
 
     @Override
     public int compareTo(Page p) {
-        return index - p.index;
+         return index - p.index;
     }
 }

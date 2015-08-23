@@ -1,5 +1,6 @@
 package javax.zxiu.comic;
 
+import com.alibaba.fastjson.JSON;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,8 +20,9 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
-import javax.zxiu.comic.beans.AllComics;
+import javax.zxiu.comic.beans.Library;
 import javax.zxiu.comic.tasks.DownloadTask;
+import javax.zxiu.comic.tasks.PostTask;
 
 /**
  * Created by Zhuo Xiu on 04/08/15.
@@ -34,9 +36,18 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AllComics allComics = DownloadTask.parseInput();
-        if (allComics.getComics().length > 0) {
-            DownloadTask.parseAllBooks(DownloadTask.parseComic(allComics.getComics()[0]));
+        if (false){
+            PostTask.post("哈哈","test");
+            System.exit(1);
+            return;
+        }
+
+
+        Library library = DownloadTask.parseInput();
+        if (library.getComics().length > 0) {
+            DownloadTask.parseComic(library.getComics()[0]);
+
+            DownloadTask.downloadComic(library.getComics()[0]);
         }
         System.exit(1);
 //        Dummy.testDownload();

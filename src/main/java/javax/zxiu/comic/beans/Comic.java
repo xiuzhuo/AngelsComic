@@ -7,21 +7,20 @@ import java.util.Date;
  * Created by Zhuo Xiu on 04/08/15.
  */
 public class Comic {
-    private String name;
+    private String title;
     private String host;
     private String url;
-    private String pattern;
     private Date download_date;
     private Date upload_date;
     private boolean finished;
     private Book[] books = new Book[0];
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getHost() {
@@ -39,16 +38,6 @@ public class Comic {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
-
     public Date getDownload_date() {
         return download_date;
     }
@@ -84,10 +73,9 @@ public class Comic {
     @Override
     public String toString() {
         return "Comic{" +
-                "name='" + name + '\'' +
+                "title='" + title + '\'' +
                 ", host='" + host + '\'' +
                 ", url='" + url + '\'' +
-                ", pattern='" + pattern + '\'' +
                 ", download_date=" + download_date +
                 ", upload_date=" + upload_date +
                 ", finished=" + finished +

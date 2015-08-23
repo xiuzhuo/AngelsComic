@@ -21,6 +21,7 @@ public class JSUtils {
     static{
         try {
             engine.eval(new FileReader(jsfile));
+            invocable = (Invocable) engine;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -28,13 +29,9 @@ public class JSUtils {
     static boolean inited=false;
     public static String unpack(String code) {
 //        System.out.println("jsfile=" + jsfile + " " + jsfile.exists());
-
         Object result=null;
         try {
-
-            invocable = (Invocable) engine;
             result = invocable.invokeFunction("unpack", code);
-
             engine.eval((String) result);
             result = invocable.invokeFunction("dm5imagefun");
 //            for (Object r:(Object[])result){
@@ -43,8 +40,6 @@ public class JSUtils {
         } catch (ScriptException  | NoSuchMethodException e) {
             e.printStackTrace();
         }
-
-
         return ((ScriptObjectMirror) result).getSlot(0)+"";
     }
 }

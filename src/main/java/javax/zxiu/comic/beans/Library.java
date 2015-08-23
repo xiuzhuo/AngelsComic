@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by Zhuo Xiu on 04/08/15.
  */
-public class AllComics {
+public class Library {
     public Comic[] getComics() {
         return comics;
     }
@@ -18,7 +18,9 @@ public class AllComics {
 
     @Override
     public String toString() {
-        return "AllComics{" +
+
+
+        return "Library{" +
                 "comics=" + Arrays.toString(comics) +
                 '}';
     }
