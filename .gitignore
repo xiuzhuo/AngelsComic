@@ -35,3 +35,6 @@ proguard/
 build/
 bin/
 
+#this project
+download/
+
