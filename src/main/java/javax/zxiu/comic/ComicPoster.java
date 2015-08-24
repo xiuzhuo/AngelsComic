@@ -49,7 +49,7 @@ public class ComicPoster extends Application {
 
             DownloadTask.downloadComic(library.getComics()[0]);
         }
-        System.exit(1);
+//        System.exit(1);
 //        Dummy.testDownload();
 //        Dummy.testReadInputFile();
 //        Dummy.testLoadPage();

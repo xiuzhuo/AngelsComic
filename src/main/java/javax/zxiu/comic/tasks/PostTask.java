@@ -1,23 +1,17 @@
 package javax.zxiu.comic.tasks;
 
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.concurrent.FutureCallback;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.HttpEntityWrapper;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import sun.rmi.runtime.RuntimeUtil;
 
 import javax.zxiu.comic.utils.IOUtils;
-import javax.zxiu.comic.utils.NetworkUtils;
+import javax.zxiu.comic.utils.NetUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -68,7 +62,7 @@ public class PostTask {
             urlParameters.add(new BasicNameValuePair("uptid", "13803586"));
             urlParameters.add(new BasicNameValuePair("rootid", "13803586"));
             entity = new UrlEncodedFormEntity(urlParameters, "GB2312");
-            NetworkUtils.post(API, headers, entity, new FutureCallback<HttpResponse>() {
+            NetUtils.post(API, headers, entity, new FutureCallback<HttpResponse>() {
                 @Override
                 public void completed(HttpResponse result) {
                     try {

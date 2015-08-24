@@ -6,7 +6,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.concurrent.FutureCallback;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.CloseableHttpPipeliningClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager;
 import org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor;
@@ -20,11 +22,11 @@ import java.io.IOException;
 /**
  * Created by Zhuo Xiu on 07/08/15.
  */
-public class NetworkUtils {
+public class NetUtils {
     static ConnectingIOReactor ioReactor;
     static PoolingNHttpClientConnectionManager connectionManager;
     static CloseableHttpAsyncClient httpAsyncClient;
-
+    static CloseableHttpPipeliningClient httpPipeliningClient;
     static {
         try {
             ioReactor = new DefaultConnectingIOReactor();
@@ -52,10 +54,18 @@ public class NetworkUtils {
 
     public static void download(String url, Header[] headers, String filePath) {
         File file = new File(filePath);
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         get(url, headers, new FutureCallback<HttpResponse>() {
             @Override
             public void completed(HttpResponse result) {
                 try {
+                    System.out.println("writting file "+file);
                     IOUtils.writeToFile(result.getEntity().getContent(), file);
                 } catch (IOException ex) {
                     failed(ex);

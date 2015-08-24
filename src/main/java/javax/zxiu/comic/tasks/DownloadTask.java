@@ -1,7 +1,6 @@
 package javax.zxiu.comic.tasks;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.org.apache.xml.internal.utils.URI;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.concurrent.FutureCallback;
@@ -14,8 +13,9 @@ import javax.zxiu.comic.beans.Comic;
 import javax.zxiu.comic.beans.Page;
 import javax.zxiu.comic.utils.IOUtils;
 import javax.zxiu.comic.utils.JSUtils;
-import javax.zxiu.comic.utils.NetworkUtils;
+import javax.zxiu.comic.utils.NetUtils;
 import javax.zxiu.comic.utils.ParseUtils;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,21 +40,19 @@ public class DownloadTask {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-       return comic;
+        return comic;
     }
 
     public static Comic parseBook(Comic comic, int index) {
         Book book = comic.getBooks()[index];
         CountDownLatch countDownLatch = new CountDownLatch(book.getLast_page());
-
-
         String[] paths = book.getUrl().split("/");
         List<Page> pageList = new ArrayList<>();
         for (int i = 1; i <= book.getLast_page(); i++) {
             String url = paths[0] + "//" + paths[2] + "/" + paths[3] + "p" + i + "/chapterimagefun.ashx?cid=" + paths[3].substring(1, paths[3].length()) + "&page=" + i + "&language=1&key=";
             System.out.println(url);
             final int finalI = i;
-            NetworkUtils.get(url, new Header[]{new BasicHeader("Referer", book.getUrl())}, new FutureCallback<HttpResponse>() {
+            NetUtils.get(url, new Header[]{new BasicHeader("Referer", book.getUrl())}, new FutureCallback<HttpResponse>() {
                 @Override
                 public void completed(HttpResponse result) {
                     try {
@@ -66,7 +64,7 @@ public class DownloadTask {
                         System.out.println(image_download_url);
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }finally {
+                    } finally {
                         countDownLatch.countDown();
                     }
                 }
@@ -94,8 +92,12 @@ public class DownloadTask {
         return comic;
     }
 
-    static String getDownloadFileName(Comic comic,Book book,Page page){
-        return "download/"+comic.getTitle()+"/"+book.getTitle()+"/"+page.getIndex()+".jpg";
+    static File getDownloadFileName(File folder, Page page) {
+        return new File(folder, page.getIndex() + ".jpg");
+    }
+
+    static File getDownloaFolder(Comic comic, Book book) {
+        return new File("download/" + comic.getTitle() + "/" + book.getTitle());
     }
 
     public static void downloadComic(Comic comic) {
@@ -103,19 +105,28 @@ public class DownloadTask {
 
         for (Book book : comic.getBooks()) {
             for (Page page : book.getPages()) {
-                if (page.getImageDownloadUrl()!=null){
-                    String fileName=getDownloadFileName(comic,book,page);
-                    System.err.println("prepare to download "+comic.getTitle()+" "+book.getTitle()+" "+fileName);
-                    NetworkUtils.download(page.getImageDownloadUrl(), new Header[]{new BasicHeader("Referer", page.getImageDownloadUrl())}, fileName);
-                    page.setFilePath(fileName);
+                if (page.getImageDownloadUrl() != null) {
+                    File folder = getDownloaFolder(comic, book);
+                    if (!folder.exists()) {
+                        folder.mkdirs();
+                    }
+                    File file = getDownloadFileName(folder, page);
+                    try {
+                        file.createNewFile();
+                        NetUtils.download(page.getImageDownloadUrl(),
+                                new Header[]{new BasicHeader("Referer", book.getUrl()), new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, file.getPath());
+                        page.setFilePath(file.getPath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
         countDownLatch.countDown();
         System.err.println(JSON.toJSONString(JSON.toJSON(comic), true));
-        try{
+        try {
             countDownLatch.await();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -137,7 +148,7 @@ public class DownloadTask {
         final Pattern pattern3 = Pattern.compile(reg3);
         final Pattern pattern4 = Pattern.compile(reg4);
         CountDownLatch countDownLatch = new CountDownLatch(1);
-        NetworkUtils.get(comic.getUrl(), null, new FutureCallback<HttpResponse>() {
+        NetUtils.get(comic.getUrl(), null, new FutureCallback<HttpResponse>() {
             @Override
             public void completed(HttpResponse result) {
                 try {
@@ -222,5 +233,5 @@ public class DownloadTask {
         Library library = JSON.parseObject(data, Library.class);
         System.err.println(JSON.toJSONString(library, true));
         return library;
-   }
+    }
 }

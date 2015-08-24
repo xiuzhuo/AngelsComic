@@ -15,13 +15,12 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.zxiu.comic.utils.IOUtils;
-import javax.zxiu.comic.utils.NetworkUtils;
+import javax.zxiu.comic.utils.NetUtils;
 import javax.zxiu.comic.utils.ParseUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
@@ -37,7 +36,7 @@ public class Dummy {
 
     public static void testDownload() {
         String url = "http://manhua1025.146-71-123-50.cdndm5.com/17/16656/216286/1_4828.jpg?cid=216286&key=8a7242c45e67ec73f81b1cda91662ed1";
-        NetworkUtils.download(url, new Header[]{new BasicHeader("Referer", "http://www.dm5.com/m216286/"),new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, "2_3997_3_4.jpg");
+        NetUtils.download(url, new Header[]{new BasicHeader("Referer", "http://www.dm5.com/m216286/"), new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, "2_3997_3_4.jpg");
         if (true) {
             return;
         }
