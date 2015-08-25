@@ -13,7 +13,9 @@ public class IOUtils {
         }
         FileOutputStream fileOutputStream = null;
         try {
-            file.delete();
+            if (file.exists()) {
+                file.delete();
+            }
             file.createNewFile();
 
             fileOutputStream = new FileOutputStream(file);

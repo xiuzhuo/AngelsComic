@@ -10,6 +10,10 @@ import java.io.File;
  */
 public abstract class UploadAPIs extends BaseAPI{
 
+    UploadAPIs() {
+        super();
+    }
+
     protected abstract String getToken(Param... params);
 
     public abstract Image upload(File file);

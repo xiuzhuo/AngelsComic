@@ -19,6 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
+import javax.zxiu.comic.apis.TietukuAPIs;
 import javax.zxiu.comic.beans.Library;
 import javax.zxiu.comic.tasks.DownloadTask;
 import javax.zxiu.comic.tasks.PostTask;
@@ -35,6 +36,13 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        if (true){
+            TietukuAPIs apIs=TietukuAPIs.getInstance();
+            apIs.createAlbum("test");
+            System.exit(1);
+        }
+
         if (false){
             PostTask.post("哈哈","test");
             System.exit(1);
@@ -45,10 +53,9 @@ public class ComicPoster extends Application {
         Library library = DownloadTask.parseInput();
         if (library.getComics().length > 0) {
             DownloadTask.parseComic(library.getComics()[0]);
-
             DownloadTask.downloadComic(library.getComics()[0]);
         }
-//        System.exit(1);
+        System.exit(1);
 //        Dummy.testDownload();
 //        Dummy.testReadInputFile();
 //        Dummy.testLoadPage();

@@ -11,9 +11,9 @@ import java.util.Objects;
  * Created by Xiu on 2015/8/25.
  */
 public abstract class BaseAPI {
-    private BaseAPI(){
+    BaseAPI() {
 
-    };
+    }
 
     protected static class Param {
         String name;

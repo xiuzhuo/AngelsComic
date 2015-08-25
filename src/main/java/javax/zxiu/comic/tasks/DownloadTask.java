@@ -111,14 +111,8 @@ public class DownloadTask {
                         folder.mkdirs();
                     }
                     File file = getDownloadFileName(folder, page);
-                    try {
-                        file.createNewFile();
-                        NetUtils.download(page.getImageDownloadUrl(),
-                                new Header[]{new BasicHeader("Referer", volume.getUrl()), new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, file.getPath());
-                        page.setFilePath(file.getPath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    NetUtils.download(page.getImageDownloadUrl(),
+                            new Header[]{new BasicHeader("Referer", volume.getUrl()), new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, file.getPath());
                 }
             }
         }
