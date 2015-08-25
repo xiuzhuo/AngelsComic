@@ -8,7 +8,7 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.util.TextUtils;
 
 import javax.zxiu.comic.beans.Library;
-import javax.zxiu.comic.beans.Book;
+import javax.zxiu.comic.beans.Volume;
 import javax.zxiu.comic.beans.Comic;
 import javax.zxiu.comic.beans.Page;
 import javax.zxiu.comic.utils.IOUtils;
@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 public class DownloadTask {
 
     public static Comic parseAllBooks(Comic comic) {
-        CountDownLatch countDownLatch = new CountDownLatch(comic.getBooks().length);
-        for (int i = 0; i < comic.getBooks().length; i++) {
+        CountDownLatch countDownLatch = new CountDownLatch(comic.getVolumes().length);
+        for (int i = 0; i < comic.getVolumes().length; i++) {
             parseBook(comic, i);
             countDownLatch.countDown();
         }
@@ -44,15 +44,15 @@ public class DownloadTask {
     }
 
     public static Comic parseBook(Comic comic, int index) {
-        Book book = comic.getBooks()[index];
-        CountDownLatch countDownLatch = new CountDownLatch(book.getLast_page());
-        String[] paths = book.getUrl().split("/");
+        Volume volume = comic.getVolumes()[index];
+        CountDownLatch countDownLatch = new CountDownLatch(volume.getLast_page());
+        String[] paths = volume.getUrl().split("/");
         List<Page> pageList = new ArrayList<>();
-        for (int i = 1; i <= book.getLast_page(); i++) {
+        for (int i = 1; i <= volume.getLast_page(); i++) {
             String url = paths[0] + "//" + paths[2] + "/" + paths[3] + "p" + i + "/chapterimagefun.ashx?cid=" + paths[3].substring(1, paths[3].length()) + "&page=" + i + "&language=1&key=";
             System.out.println(url);
             final int finalI = i;
-            NetUtils.get(url, new Header[]{new BasicHeader("Referer", book.getUrl())}, new FutureCallback<HttpResponse>() {
+            NetUtils.get(url, new Header[]{new BasicHeader("Referer", volume.getUrl())}, new FutureCallback<HttpResponse>() {
                 @Override
                 public void completed(HttpResponse result) {
                     try {
@@ -86,8 +86,8 @@ public class DownloadTask {
             e.printStackTrace();
         }
 
-        book.setPages(pageList.toArray(book.getPages()));
-        Arrays.sort(book.getPages());
+        volume.setPages(pageList.toArray(volume.getPages()));
+        Arrays.sort(volume.getPages());
 //        System.err.println(JSON.toJSONString(JSON.toJSON(comic), true));
         return comic;
     }
@@ -96,17 +96,17 @@ public class DownloadTask {
         return new File(folder, page.getIndex() + ".jpg");
     }
 
-    static File getDownloaFolder(Comic comic, Book book) {
-        return new File("download/" + comic.getTitle() + "/" + book.getTitle());
+    static File getDownloaFolder(Comic comic, Volume volume) {
+        return new File("download/" + comic.getTitle() + "/" + volume.getTitle());
     }
 
     public static void downloadComic(Comic comic) {
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        for (Book book : comic.getBooks()) {
-            for (Page page : book.getPages()) {
+        for (Volume volume : comic.getVolumes()) {
+            for (Page page : volume.getPages()) {
                 if (page.getImageDownloadUrl() != null) {
-                    File folder = getDownloaFolder(comic, book);
+                    File folder = getDownloaFolder(comic, volume);
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }
@@ -114,7 +114,7 @@ public class DownloadTask {
                     try {
                         file.createNewFile();
                         NetUtils.download(page.getImageDownloadUrl(),
-                                new Header[]{new BasicHeader("Referer", book.getUrl()), new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, file.getPath());
+                                new Header[]{new BasicHeader("Referer", volume.getUrl()), new BasicHeader("Accept", "image/webp,*/*;q=0.8")}, file.getPath());
                         page.setFilePath(file.getPath());
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -155,7 +155,7 @@ public class DownloadTask {
                     String html = IOUtils.inputStreamToString(result.getEntity().getContent());
                     System.out.println(html);
                     Matcher matcher0 = pattern0.matcher(html);
-                    List<Book> bookList = new ArrayList<>();
+                    List<Volume> volumeList = new ArrayList<>();
                     while (matcher0.find()) {
                         String ulText = html.substring(matcher0.start(), matcher0.end());
                         System.out.println(ulText);
@@ -189,17 +189,17 @@ public class DownloadTask {
                                 last_page = Integer.parseInt(pageText.substring(0, pageText.length() - 1));
                             }
                             if (last_page != 0 && !TextUtils.isBlank(title) && !TextUtils.isBlank(url)) {
-                                Book book = new Book();
-                                book.setIndex(index);
-                                book.setTitle(title);
-                                book.setUrl(url);
-                                book.setLast_count(last_page);
-                                bookList.add(book);
+                                Volume volume = new Volume();
+                                volume.setIndex(index);
+                                volume.setTitle(title);
+                                volume.setUrl(url);
+                                volume.setLast_count(last_page);
+                                volumeList.add(volume);
                             }
                         }
                     }
-                    comic.setBooks(bookList.toArray(comic.getBooks()));
-                    Arrays.sort(comic.getBooks());
+                    comic.setVolumes(volumeList.toArray(comic.getVolumes()));
+                    Arrays.sort(comic.getVolumes());
                     countDownLatch.countDown();
                 } catch (IOException e) {
                     e.printStackTrace();

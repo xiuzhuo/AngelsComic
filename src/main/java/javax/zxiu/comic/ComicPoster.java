@@ -1,6 +1,5 @@
 package javax.zxiu.comic;
 
-import com.alibaba.fastjson.JSON;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

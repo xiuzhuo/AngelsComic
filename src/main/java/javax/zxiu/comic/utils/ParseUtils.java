@@ -1,12 +1,5 @@
 package javax.zxiu.comic.utils;
 
-import com.alibaba.fastjson.JSON;
-
-import javax.zxiu.comic.Config;
-import javax.zxiu.comic.beans.Library;
-import javax.zxiu.comic.beans.Book;
-import javax.zxiu.comic.beans.Comic;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

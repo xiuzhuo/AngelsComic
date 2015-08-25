@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Zhuo Xiu on 04/08/15.
  */
 
-public class Book implements Comparable<Book> {
+public class Volume implements Comparable<Volume> {
     private int index;
     private String title;
     private String url;
@@ -78,7 +78,7 @@ public class Book implements Comparable<Book> {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "Volume{" +
                 "index=" + index +
                 ", title='" + title + '\'' +
                 ", url='" + url + '\'' +
@@ -91,7 +91,7 @@ public class Book implements Comparable<Book> {
 
 
     @Override
-    public int compareTo(Book book) {
-        return index - book.index;
+    public int compareTo(Volume volume) {
+        return index - volume.index;
     }
 }

@@ -13,7 +13,7 @@ public class Comic {
     private Date download_date;
     private Date upload_date;
     private boolean finished;
-    private Book[] books = new Book[0];
+    private Volume[] volumes = new Volume[0];
 
     public String getTitle() {
         return title;
@@ -62,12 +62,12 @@ public class Comic {
         this.finished = finished;
     }
 
-    public Book[] getBooks() {
-        return books;
+    public Volume[] getVolumes() {
+        return volumes;
     }
 
-    public void setBooks(Book[] books) {
-        this.books = books;
+    public void setVolumes(Volume[] volumes) {
+        this.volumes = volumes;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Comic {
                 ", download_date=" + download_date +
                 ", upload_date=" + upload_date +
                 ", finished=" + finished +
-                ", books=" + Arrays.toString(books) +
+                ", volumes=" + Arrays.toString(volumes) +
                 '}';
     }
 }
