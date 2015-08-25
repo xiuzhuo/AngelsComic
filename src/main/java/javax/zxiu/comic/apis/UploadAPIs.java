@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * Created by Xiu on 2015/8/25.
  */
-public abstract class UploadAPI extends BaseAPI{
+public abstract class UploadAPIs extends BaseAPI{
 
     protected abstract String getToken(Param... params);
 
