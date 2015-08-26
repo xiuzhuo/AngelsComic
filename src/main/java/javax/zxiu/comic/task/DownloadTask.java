@@ -1,4 +1,4 @@
-package javax.zxiu.comic.tasks;
+package javax.zxiu.comic.task;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.http.Header;
@@ -7,14 +7,14 @@ import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.TextUtils;
 
-import javax.zxiu.comic.beans.Library;
-import javax.zxiu.comic.beans.Volume;
-import javax.zxiu.comic.beans.Comic;
-import javax.zxiu.comic.beans.Page;
-import javax.zxiu.comic.utils.IOUtils;
-import javax.zxiu.comic.utils.JSUtils;
-import javax.zxiu.comic.utils.NetUtils;
-import javax.zxiu.comic.utils.ParseUtils;
+import javax.zxiu.comic.bean.Library;
+import javax.zxiu.comic.bean.Volume;
+import javax.zxiu.comic.bean.Comic;
+import javax.zxiu.comic.bean.Page;
+import javax.zxiu.comic.util.IOUtils;
+import javax.zxiu.comic.util.JSUtils;
+import javax.zxiu.comic.util.NetUtils;
+import javax.zxiu.comic.util.ParseUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

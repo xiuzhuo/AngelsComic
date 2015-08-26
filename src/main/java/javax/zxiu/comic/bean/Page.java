@@ -1,4 +1,4 @@
-package javax.zxiu.comic.beans;
+package javax.zxiu.comic.bean;
 
 import java.io.File;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package javax.zxiu.comic.utils;
+package javax.zxiu.comic.util;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
@@ -7,7 +7,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 /**

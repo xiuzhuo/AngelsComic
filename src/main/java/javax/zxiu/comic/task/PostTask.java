@@ -1,4 +1,4 @@
-package javax.zxiu.comic.tasks;
+package javax.zxiu.comic.task;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -8,8 +8,8 @@ import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 
-import javax.zxiu.comic.utils.IOUtils;
-import javax.zxiu.comic.utils.NetUtils;
+import javax.zxiu.comic.util.IOUtils;
+import javax.zxiu.comic.util.NetUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

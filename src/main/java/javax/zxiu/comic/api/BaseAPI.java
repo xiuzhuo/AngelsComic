@@ -1,13 +1,9 @@
-package javax.zxiu.comic.apis;
+package javax.zxiu.comic.api;
 
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
 
 /**
  * Created by Xiu on 2015/8/25.

@@ -1,4 +1,4 @@
-package javax.zxiu.comic.tasks;
+package javax.zxiu.comic.task;
 
 /**
  * Created by Xiu on 2015/8/25.

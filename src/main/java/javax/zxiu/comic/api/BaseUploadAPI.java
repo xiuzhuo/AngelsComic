@@ -1,6 +1,5 @@
-package javax.zxiu.comic.apis;
+package javax.zxiu.comic.api;
 
-import javax.zxiu.comic.entity.Picture;
 import java.io.File;
 
 /**
@@ -13,8 +12,5 @@ public abstract class BaseUploadAPI extends BaseAPI{
     }
 
     protected abstract String getToken(Param... params);
-
-    public abstract TietukuAPI.Pic upload(File file);
-
 
 }

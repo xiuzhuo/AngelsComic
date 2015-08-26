@@ -1,4 +1,4 @@
-package javax.zxiu.comic.utils;
+package javax.zxiu.comic.util;
 
 import java.util.ArrayList;
 import java.util.List;

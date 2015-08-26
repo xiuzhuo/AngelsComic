@@ -19,10 +19,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
-import javax.zxiu.comic.apis.TietukuAPI;
-import javax.zxiu.comic.beans.Library;
-import javax.zxiu.comic.tasks.DownloadTask;
-import javax.zxiu.comic.tasks.PostTask;
+import javax.zxiu.comic.api.TietukuAPI;
+import javax.zxiu.comic.bean.Library;
+import javax.zxiu.comic.task.DownloadTask;
+import javax.zxiu.comic.task.PostTask;
+import java.io.File;
 
 /**
  * Created by Zhuo Xiu on 04/08/15.
@@ -36,26 +37,39 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        if (true){
-            TietukuAPI apIs= TietukuAPI.getInstance();
-            apIs.createAlbum("test");
+        TietukuAPI api = TietukuAPI.getInstance();
+        if (true) {
+            File file = new File("/Users/zxui/IdeaProjects/comic-poster/download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
+            System.out.println("file=" + file + " exist=" + file.exists());
+            if (file.exists()) {
+                System.out.println(api.uploadPic(1125516, file));
+            }
             System.exit(1);
         }
 
-        if (false){
-            PostTask.post("哈哈","test");
+        if (!true) {
+            long aid = api.createAlbum("test");
+            api.editAlbum(aid, "haha");
+            api.deleteAlbum(aid);
             System.exit(1);
-            return;
+        }
+
+        if (!true) {
+            PostTask.post("哈哈", "test");
+            System.exit(1);
         }
 
 
-        Library library = DownloadTask.parseInput();
-        if (library.getComics().length > 0) {
-            DownloadTask.parseComic(library.getComics()[0]);
-            DownloadTask.downloadComic(library.getComics()[0]);
+        if (!true) {
+            Library library = DownloadTask.parseInput();
+            if (library.getComics().length > 0) {
+                DownloadTask.parseComic(library.getComics()[0]);
+                DownloadTask.downloadComic(library.getComics()[0]);
+            }
+            System.exit(1);
         }
         System.exit(1);
+
 //        Dummy.testDownload();
 //        Dummy.testReadInputFile();
 //        Dummy.testLoadPage();

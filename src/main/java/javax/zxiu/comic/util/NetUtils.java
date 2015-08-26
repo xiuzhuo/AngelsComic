@@ -1,4 +1,4 @@
-package javax.zxiu.comic.utils;
+package javax.zxiu.comic.util;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -6,7 +6,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.concurrent.FutureCallback;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.CloseableHttpPipeliningClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;

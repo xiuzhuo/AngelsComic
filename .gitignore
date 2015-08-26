@@ -33,7 +33,6 @@ proguard/
 .gradletasknamecache
 .gradle/
 build/
-bin/
 
 #this project
 download/
