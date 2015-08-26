@@ -1,5 +1,7 @@
 package javax.zxiu.comic.apis;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
@@ -14,7 +16,22 @@ public abstract class BaseAPI {
     BaseAPI() {
 
     }
+    public static String base64(byte[] target) {
+        return Base64.encodeBase64URLSafeString(target).trim();
+    }
 
+    public static String hmac_sha1(String value, String key) {
+        try {
+            byte[] keyBytes = key.getBytes();
+            SecretKeySpec signingKey = new SecretKeySpec(keyBytes, "HmacSHA1");
+            Mac mac = Mac.getInstance("HmacSHA1");
+            mac.init(signingKey);
+            byte[] rawHmac = mac.doFinal(value.getBytes());
+            return new String(rawHmac).trim();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     protected static class Param {
         String name;
         Object value;

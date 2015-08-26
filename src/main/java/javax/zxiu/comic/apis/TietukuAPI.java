@@ -1,28 +1,19 @@
 package javax.zxiu.comic.apis;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
 import org.apache.http.client.entity.EntityBuilder;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
-import sun.misc.BASE64Encoder;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import javax.zxiu.comic.beans.Image;
 import javax.zxiu.comic.utils.NetUtils;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
  * Created by Xiu on 2015/8/25.
  */
-public class TietukuAPIs extends UploadAPIs {
-    static TietukuAPIs tietukuAPI = new TietukuAPIs();
+public class TietukuAPI extends BaseUploadAPI {
+    static TietukuAPI tietukuAPI = new TietukuAPI();
     static final String AccessKey = "ef3fc34e1b1f39d308d52f4deed3e98dd3df5234";
     static final String SecretKey = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
     static final String OpenKey = "nZuZy8VkZpqVyJSWlGnIlWBuymdkyZaYnJiaZpdrb5ycaMrLl2NlacOblGWaYZw=";
@@ -39,26 +30,29 @@ public class TietukuAPIs extends UploadAPIs {
     static final String API_ALBUM = "http://api.tietuku.com/v1/Album";
 
 
-    public static TietukuAPIs getInstance() {
+    public static class AlbumList {
+        private String name;
+        private int total;
+        private Album[] album;
+    }
+
+    public static class Album {
+        private long aid;
+        private String albumname;
+        private int num;
+        private int code;
+        private Pic[] pic;
+    }
+
+    public static class Pic {
+        private long id;
+        private String url;
+    }
+
+    public static TietukuAPI getInstance() {
         return tietukuAPI;
     }
 
-    public static String base64(byte[] target) {
-        return Base64.encodeBase64URLSafeString(target).trim();
-    }
-
-    public static String hmac_sha1(String value, String key) {
-        try {
-            byte[] keyBytes = key.getBytes();
-            SecretKeySpec signingKey = new SecretKeySpec(keyBytes, "HmacSHA1");
-            Mac mac = Mac.getInstance("HmacSHA1");
-            mac.init(signingKey);
-            byte[] rawHmac = mac.doFinal(value.getBytes());
-            return new String(rawHmac).trim();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     protected String getToken(Param... params) {
@@ -76,8 +70,12 @@ public class TietukuAPIs extends UploadAPIs {
     }
 
     @Override
-    public Image upload(File file) {
+    public Pic upload(File file) {
         return null;
+    }
+
+    public void getAlbumList(){
+        
     }
 
     public void createAlbum(String albumName) {
@@ -87,14 +85,11 @@ public class TietukuAPIs extends UploadAPIs {
         try {
             EntityBuilder builder = EntityBuilder.create();
             builder.setParameters(new BasicNameValuePair(PARAM_TOKEN, token));
-
-
             String result = NetUtils.post(API_ALBUM, new Header[]{}, builder.build());
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     static long getDeadline() {
