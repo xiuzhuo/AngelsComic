@@ -5,10 +5,18 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.http.Header;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.nio.entity.NByteArrayEntity;
 
 import javax.zxiu.comic.util.NetUtils;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.OutputStream;
 import java.util.Date;
 
 /**
@@ -147,14 +155,23 @@ public class TietukuAPI extends BaseUploadAPI {
 
     public Pic uploadPic(long aid, File file) {
         String token = getToken(new Param(PARAM_DEADLINE, getDeadline()), new Param("from", "file"), new Param(PARAM_AID, aid));
-        token="ef3fc34e1b1f39d308d52f4deed3e98dd3df5234:MDF2OXhoeW1WSlVjZ2xtRmp3dzZkY0l0SEY0PQ==:eyJkZWFkbGluZSI6MTQ0MDU4NjA1NiwiYWN0aW9uIjoiZ2V0IiwidWlkIjoiNTE1OTE4IiwiYWlkIjoiMTEyNTUxNiIsImZyb20iOiJmaWxlIn0=";
+        //token="ef3fc34e1b1f39d308d52f4deed3e98dd3df5234:YzdTY2VSMkcwUF9tU0xrTVAtU2NKZ1NJSnpVPQ==:eyJkZWFkbGluZSI6MTQ0MDY2ODk1OSwiYWN0aW9uIjoiZ2V0IiwidWlkIjoiNTE1OTE4IiwiYWlkIjoiMTEyNTUxNiIsImZyb20iOiJmaWxlIn0=";
+        String boundary="----WebKitFormBoundarygSzncATl5myYPfIA";
+
         try {
-            EntityBuilder builder = EntityBuilder.create().setParameters(new BasicNameValuePair(PARAM_TOKEN, token));
+
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setContentType(ContentType.MULTIPART_FORM_DATA);
-            builder.setFile(file);
-            String result = NetUtils.post(API_UPLOAD, new Header[]{}, builder.build());
+            builder.addTextBody(PARAM_TOKEN, token, ContentType.DEFAULT_TEXT);
+            builder.addBinaryBody("file", file, ContentType.create("image/jpg"), file.getName());
+            builder.setBoundary(boundary);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            builder.build().writeTo(baos);
+            System.out.println("baos=\n" + baos.toString());
+            NByteArrayEntity nByteArrayEntity = new NByteArrayEntity(baos.toByteArray());
+            String result = NetUtils.post(API_UPLOAD, null, nByteArrayEntity);
             System.err.println(result);
-            return JSON.parseObject(result,Pic.class);
+            return JSON.parseObject(result, Pic.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -202,7 +219,7 @@ public class TietukuAPI extends BaseUploadAPI {
     }
 
     static long getDeadline() {
-        return new Date().getTime() / 1000 + TIMEOUT;
+        return new Date().getTime()/1000 + TIMEOUT;
     }
 
 }

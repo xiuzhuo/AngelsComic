@@ -19,6 +19,8 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
+import javax.zxiu.comic.api.GoogleCloudStorageAPI;
+import javax.zxiu.comic.api.Popo8API;
 import javax.zxiu.comic.api.TietukuAPI;
 import javax.zxiu.comic.bean.Library;
 import javax.zxiu.comic.task.DownloadTask;
@@ -37,12 +39,23 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if (true){
+            File file = new File("download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
+            Popo8API.upload(file);
+            System.exit(1);
+        }
+
+
+        if (!true){
+            GoogleCloudStorageAPI.test(null);
+            System.exit(1);
+        }
         TietukuAPI api = TietukuAPI.getInstance();
-        if (true) {
-            File file = new File("/Users/zxui/IdeaProjects/comic-poster/download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
+        if (!true) {
+            File file = new File("download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
             System.out.println("file=" + file + " exist=" + file.exists());
             if (file.exists()) {
-                System.out.println(api.uploadPic(1125516, file));
+                System.out.println(api.uploadPic(1129141, file));
             }
             System.exit(1);
         }
@@ -50,7 +63,7 @@ public class ComicPoster extends Application {
         if (!true) {
             long aid = api.createAlbum("test");
             api.editAlbum(aid, "haha");
-            api.deleteAlbum(aid);
+//            api.deleteAlbum(aid);
             System.exit(1);
         }
 

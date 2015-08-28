@@ -1,11 +1,14 @@
 package javax.zxiu.comic.util;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.concurrent.FutureCallback;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.CloseableHttpPipeliningClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
@@ -13,6 +16,8 @@ import org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager;
 import org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor;
 import org.apache.http.nio.reactor.ConnectingIOReactor;
 import org.apache.http.nio.reactor.IOReactorException;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HttpContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,8 +31,7 @@ public class NetUtils {
     static ConnectingIOReactor ioReactor;
     static PoolingNHttpClientConnectionManager connectionManager;
     static CloseableHttpAsyncClient httpAsyncClient;
-    static CloseableHttpPipeliningClient httpPipeliningClient;
-
+    static CloseableHttpClient httpClient;
     static {
         try {
             ioReactor = new DefaultConnectingIOReactor();
@@ -55,9 +59,10 @@ public class NetUtils {
 
     public static String post(String url, Header[] headers, HttpEntity entity) {
         CountDownLatch countDownLatch = new CountDownLatch(1);
-
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setHeaders(headers);
+        if (headers!=null){
+            httpPost.setHeaders(headers);
+        }
         httpPost.setEntity(entity);
         StringBuffer stringBuffer = new StringBuffer();
         httpAsyncClient.execute(httpPost, new FutureCallback<HttpResponse>() {
@@ -90,6 +95,10 @@ public class NetUtils {
             e.printStackTrace();
         }
         return stringBuffer.toString();
+    }
+    public static String upload(String url, File file){
+
+        return null;
     }
 
 
