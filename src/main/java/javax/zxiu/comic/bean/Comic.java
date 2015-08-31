@@ -3,21 +3,36 @@ package javax.zxiu.comic.bean;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Zhuo Xiu on 04/08/15.
  */
 public class Comic {
     private StringProperty title = new SimpleStringProperty();
-    private StringProperty host = new SimpleStringProperty();
     private StringProperty url = new SimpleStringProperty();
     private Date download_date;
     private Date upload_date;
     private SimpleBooleanProperty finished = new SimpleBooleanProperty();
-    private Volume[] volumes = new Volume[0];
+    private ObservableList<Volume> volumes = FXCollections.observableArrayList();
+
+    @Override
+    public String toString() {
+        return "Comic{" +
+                "title=" + title +
+                ", url=" + url +
+                ", download_date=" + download_date +
+                ", upload_date=" + upload_date +
+                ", finished=" + finished +
+                ", volumes=" + volumes +
+                '}';
+    }
 
     public String getTitle() {
         return title.get();
@@ -25,14 +40,6 @@ public class Comic {
 
     public void setTitle(String title) {
         this.title.set(title);
-    }
-
-    public String getHost() {
-        return host.get();
-    }
-
-    public void setHost(String host) {
-        this.host.set(host);
     }
 
     public String getUrl() {
@@ -67,24 +74,12 @@ public class Comic {
         this.finished.set(finished);
     }
 
-    public Volume[] getVolumes() {
+    public ObservableList<Volume> getVolumes() {
         return volumes;
     }
 
-    public void setVolumes(Volume[] volumes) {
-        this.volumes = volumes;
-    }
-
-    @Override
-    public String toString() {
-        return "Comic{" +
-                "title='" + title + '\'' +
-                ", host='" + host + '\'' +
-                ", url='" + url + '\'' +
-                ", download_date=" + download_date +
-                ", upload_date=" + upload_date +
-                ", finished=" + finished +
-                ", volumes=" + Arrays.toString(volumes) +
-                '}';
+    public void setVolumes(List<Volume> volumes) {
+        this.volumes.removeAll();
+        this.volumes.addAll(volumes);
     }
 }

@@ -76,11 +76,11 @@ public class ComicPoster extends Application {
 
         if (true) {
             Library library = DownloadTask.parseInput();
-            if (library.getComics().length > 0) {
-                DownloadTask.parseComic(library.getComics()[0]);
+            if (library.getComics().size() > 0) {
+                DownloadTask.parseComic(library.getComics().get(0));
 
                 //DownloadTask.downloadComic(library.getComics()[0]);
-                System.err.println(JSON.toJSONString(JSON.toJSON(library.getComics()[0]), true));
+                System.err.println(JSON.toJSONString(JSON.toJSON(library.getComics().get(0)), true));
             }
             System.exit(1);
         }

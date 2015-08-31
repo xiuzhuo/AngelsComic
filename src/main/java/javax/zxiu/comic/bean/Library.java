@@ -1,27 +1,32 @@
 package javax.zxiu.comic.bean;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Zhuo Xiu on 04/08/15.
  */
 public class Library {
-    public Comic[] getComics() {
+
+    private ObservableList<Comic> comics = FXCollections.observableArrayList();
+
+
+    public ObservableList<Comic> getComics() {
         return comics;
     }
 
-    public void setComics(Comic[] comics) {
-        this.comics = comics;
+    public void setComics(List<Comic> comics) {
+        this.comics.clear();
+        this.comics.addAll(comics);
     }
-
-    private Comic[] comics = new Comic[0];
 
     @Override
     public String toString() {
-
-
         return "Library{" +
-                "comics=" + Arrays.toString(comics) +
+                "comics=" + comics +
                 '}';
     }
 }

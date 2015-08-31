@@ -75,7 +75,7 @@ public class Page implements Comparable<Page> {
     }
 
     public File getImageFile() {
-        return new File(getImagePath());
+        return getImagePath() == null ? null : new File(getImagePath());
     }
 
     public void setImageFile(File imageFile) {

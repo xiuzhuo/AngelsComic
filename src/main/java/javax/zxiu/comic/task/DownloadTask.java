@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
@@ -30,8 +31,8 @@ import java.util.regex.Pattern;
 public class DownloadTask {
 
     public static Comic parseAllBooks(Comic comic) {
-        CountDownLatch countDownLatch = new CountDownLatch(comic.getVolumes().length);
-        for (int i = 0; i < comic.getVolumes().length; i++) {
+        CountDownLatch countDownLatch = new CountDownLatch(comic.getVolumes().size());
+        for (int i = 0; i < comic.getVolumes().size(); i++) {
             parseBook(comic, i);
             countDownLatch.countDown();
         }
@@ -44,7 +45,7 @@ public class DownloadTask {
     }
 
     public static Comic parseBook(Comic comic, int index) {
-        Volume volume = comic.getVolumes()[index];
+        Volume volume = comic.getVolumes().get(index);
         CountDownLatch countDownLatch = new CountDownLatch(volume.getLast_page());
         String[] paths = volume.getUrl().split("/");
         List<Page> pageList = new ArrayList<>();
@@ -172,7 +173,7 @@ public class DownloadTask {
                                     title = ParseUtils.matchAttr(aText, "a", "title");
                                     System.out.println("title=" + title);
                                 }
-                                url = comic.getHost() + ParseUtils.matchAttr(aText, "a", "href");
+                                url = "http://www.dm5.com" + ParseUtils.matchAttr(aText, "a", "href");
                                 System.out.println("url=" + url);
                             }
 
@@ -192,8 +193,9 @@ public class DownloadTask {
                             }
                         }
                     }
-                    comic.setVolumes(volumeList.toArray(comic.getVolumes()));
-                    Arrays.sort(comic.getVolumes());
+                    comic.getVolumes().clear();
+                    comic.getVolumes().addAll(volumeList);
+                    Collections.sort(comic.getVolumes());
                     countDownLatch.countDown();
                 } catch (IOException e) {
                     e.printStackTrace();
