@@ -1,5 +1,9 @@
 package javax.zxiu.comic.bean;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -7,37 +11,38 @@ import java.util.Date;
  * Created by Zhuo Xiu on 04/08/15.
  */
 public class Comic {
-    private String title;
-    private String host;
-    private String url;
+    private StringProperty title = new SimpleStringProperty();
+    private StringProperty host = new SimpleStringProperty();
+    private StringProperty url = new SimpleStringProperty();
     private Date download_date;
     private Date upload_date;
-    private boolean finished;
+    private SimpleBooleanProperty finished = new SimpleBooleanProperty();
     private Volume[] volumes = new Volume[0];
 
     public String getTitle() {
-        return title;
+        return title.get();
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title.set(title);
     }
 
     public String getHost() {
-        return host;
+        return host.get();
     }
 
     public void setHost(String host) {
-        this.host = host;
+        this.host.set(host);
     }
 
     public String getUrl() {
-        return url;
+        return url.get();
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.url.set(url);
     }
+
     public Date getDownload_date() {
         return download_date;
     }
@@ -55,11 +60,11 @@ public class Comic {
     }
 
     public boolean isFinished() {
-        return finished;
+        return finished.get();
     }
 
     public void setFinished(boolean finished) {
-        this.finished = finished;
+        this.finished.set(finished);
     }
 
     public Volume[] getVolumes() {

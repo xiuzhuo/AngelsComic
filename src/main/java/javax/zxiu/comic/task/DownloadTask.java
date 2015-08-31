@@ -117,7 +117,7 @@ public class DownloadTask {
             }
         }
         countDownLatch.countDown();
-        System.err.println(JSON.toJSONString(JSON.toJSON(comic), true));
+        //System.err.println(JSON.toJSONString(JSON.toJSON(comic), true));
         try {
             countDownLatch.await();
         } catch (Exception e) {

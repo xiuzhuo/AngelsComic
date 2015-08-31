@@ -1,5 +1,6 @@
 package javax.zxiu.comic;
 
+import com.alibaba.fastjson.JSON;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -39,14 +40,14 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (!true){
+        if (!true) {
             File file = new File("download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
             Popo8API.upload(file);
             System.exit(1);
         }
 
 
-        if (!true){
+        if (!true) {
             GoogleCloudStorageAPI.test(null);
             System.exit(1);
         }
@@ -77,7 +78,9 @@ public class ComicPoster extends Application {
             Library library = DownloadTask.parseInput();
             if (library.getComics().length > 0) {
                 DownloadTask.parseComic(library.getComics()[0]);
-                DownloadTask.downloadComic(library.getComics()[0]);
+
+                //DownloadTask.downloadComic(library.getComics()[0]);
+                System.err.println(JSON.toJSONString(JSON.toJSON(library.getComics()[0]), true));
             }
             System.exit(1);
         }
@@ -96,8 +99,8 @@ public class ComicPoster extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 //        System.out.println(getClass());
-//        System.out.println(getClass().getClassLoader().getResource("sample.fxml"));
-//        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+//        System.out.println(getClass().getClassLoader().getResource("javafx/ComicList.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("javafx/ComicList.fxml"));
 //        primaryStage.setTitle("Hello World");
 //        primaryStage.setScene(new Scene(root, 900, 275));
 //        primaryStage.show();

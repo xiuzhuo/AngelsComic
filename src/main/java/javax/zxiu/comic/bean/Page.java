@@ -1,5 +1,10 @@
 package javax.zxiu.comic.bean;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.File;
 import java.util.Date;
 
@@ -8,11 +13,11 @@ import java.util.Date;
  */
 public class Page implements Comparable<Page> {
     private int index;
-    private String imageDownloadUrl;
-    private String imageUploadUrl;
-    private long imageSize;
+    private StringProperty imageDownloadUrl = new SimpleStringProperty();
+    private StringProperty imageUploadUrl = new SimpleStringProperty();
+    private LongProperty imageSize = new SimpleLongProperty();
     private File imageFile;
-    private String filePath;
+    private StringProperty imagePath = new SimpleStringProperty();
     private Date downloadDate;
     private Date uploadDate;
 
@@ -23,7 +28,7 @@ public class Page implements Comparable<Page> {
                 ", imageDownloadUrl='" + imageDownloadUrl + '\'' +
                 ", imageUploadUrl='" + imageUploadUrl + '\'' +
                 ", imageSize=" + imageSize +
-                ", filePath='" + filePath + '\'' +
+                ", imagePath='" + imagePath + '\'' +
                 ", downloadDate=" + downloadDate +
                 ", uploadDate=" + uploadDate +
                 '}';
@@ -38,43 +43,43 @@ public class Page implements Comparable<Page> {
     }
 
     public String getImageDownloadUrl() {
-        return imageDownloadUrl;
+        return imageDownloadUrl.get();
     }
 
     public void setImageDownloadUrl(String imageDownloadUrl) {
-        this.imageDownloadUrl = imageDownloadUrl;
+        this.imageDownloadUrl.set(imageDownloadUrl);
     }
 
     public String getImageUploadUrl() {
-        return imageUploadUrl;
+        return imageUploadUrl.get();
     }
 
     public void setImageUploadUrl(String imageUploadUrl) {
-        this.imageUploadUrl = imageUploadUrl;
+        this.imageUploadUrl.set(imageUploadUrl);
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getImagePath() {
+        return imagePath.get();
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setImagePath(String imagePath) {
+        this.imagePath.set(imagePath);
     }
 
     public long getImageSize() {
-        return imageSize;
+        return imageSize.get();
     }
 
     public void setImageSize(long imageSize) {
-        this.imageSize = imageSize;
+        this.imageSize.set(imageSize);
     }
 
     public File getImageFile() {
-        return imageFile;
+        return new File(getImagePath());
     }
 
     public void setImageFile(File imageFile) {
-        this.imageFile = imageFile;
+        setImagePath(imageFile.getPath());
     }
 
     public Date getDownloadDate() {
@@ -95,6 +100,6 @@ public class Page implements Comparable<Page> {
 
     @Override
     public int compareTo(Page p) {
-         return index - p.index;
+        return index - p.index;
     }
 }

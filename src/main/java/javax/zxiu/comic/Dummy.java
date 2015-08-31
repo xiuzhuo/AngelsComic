@@ -163,7 +163,7 @@ public class Dummy {
         String code = "eval(function(p,a,c,k,e,d){e=function(c){return(c<a?\"\":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\\\b'+e(c)+'\\\\b','g'),k[c]);return p;}('n 8(){2 6=4;2 7=\\'9\\';2 5=\"o://l.m-p-s-t.q.r/c/e/4\";2 3=[\"/b.1\",\"/a.1\",\"/j.1\",\"/k.1\",\"/f.1\",\"/g.1\",\"/h.1\",\"/u.1\",\"/F.1\",\"/E.1\",\"/D.1\",\"/G.1\",\"/J.1\",\"/H.1\",\"/I.1\",\"/C.1\",\"/x.1\",\"/w.1\",\"/v.1\",\"/y.1\"];B(2 i=0;i<3.A;i++){3[i]=5+3[i]+\\'?6=4&7=9\\'}z 3}2 d;d=8();',46,46,'|jpg|var|pvalue|154246|pix|cid|key|dm5imagefun|60f01803fa98cf784d8f55d6fea87160|4_4585|3_9610|15||14828|7_9559|8_2855|9_5479||5_2020|6_3359|manhua1023|107|function|http|181|cdndm5|com|243|170|10_8380|21_1568|20_9070|19_7299|22_6367|return|length|for|18_1708|13_9570|12_5230|11_3509|14_3537|16_4567|17_5508|15_9889'.split('|'),0,{}))";
 
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-//        System.out.println(Dummy.class.getClassLoader().getResource("sample.fxml").toExternalForm());
+//        System.out.println(Dummy.class.getClassLoader().getResource("javafx/ComicList.fxml").toExternalForm());
         File file = new File(Dummy.class.getClassLoader().getResource("unpack.js").getPath());
         System.out.println("file=" + file + " " + file.exists());
         try {
