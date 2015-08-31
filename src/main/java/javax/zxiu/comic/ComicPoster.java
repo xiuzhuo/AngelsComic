@@ -39,7 +39,7 @@ public class ComicPoster extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (true){
+        if (!true){
             File file = new File("download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
             Popo8API.upload(file);
             System.exit(1);
@@ -73,7 +73,7 @@ public class ComicPoster extends Application {
         }
 
 
-        if (!true) {
+        if (true) {
             Library library = DownloadTask.parseInput();
             if (library.getComics().length > 0) {
                 DownloadTask.parseComic(library.getComics()[0]);
