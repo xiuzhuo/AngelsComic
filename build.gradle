@@ -19,9 +19,4 @@ dependencies {
     compile 'org.apache.httpcomponents:httpasyncclient:4.1'
     compile 'com.alibaba:fastjson:1.1.31'
     compile 'org.apache.httpcomponents:httpmime:4.5'
-    compile 'com.google.api-client:google-api-client:1.20.0'
-    compile 'com.google.apis:google-api-services-storage:v1-rev40-1.20.0'
-    compile 'com.google.api-client:google-api-client-extensions:1.6.0-beta'
-    compile 'com.google.api-client:google-api-client-java6:1.20.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
 }

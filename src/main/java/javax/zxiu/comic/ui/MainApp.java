@@ -70,7 +70,6 @@ public class MainApp extends Application {
             rootLayout.setCenter(personOverview);
             ComicListController controller = fxmlLoader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

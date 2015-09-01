@@ -1,13 +1,13 @@
 package javax.zxiu.comic.controllers;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -23,13 +23,19 @@ import javax.zxiu.comic.ui.MainApp;
  * Created by Zhuo Xiu on 31/08/15.
  */
 public class ComicListController {
-
+    Comic currentComic;
 
     @FXML
     private ListView<Comic> comicList;
 
     @FXML
     private TextField searchText;
+
+    @FXML
+    private Label title;
+
+    @FXML
+    private Hyperlink url;
 
     @FXML
     private Button searchButton;
@@ -64,6 +70,7 @@ public class ComicListController {
             @Override
             public void changed(ObservableValue<? extends Comic> observable, Comic oldValue, Comic newValue) {
                 System.out.println("Selected item: " + newValue);
+                setCurrentComic(newValue);
             }
         });
         searchButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -82,11 +89,19 @@ public class ComicListController {
         });
     }
 
+    void setCurrentComic(Comic comic) {
+        if (currentComic != comic && comic != null) {
+            currentComic = comic;
+            title.setText(currentComic.getTitle());
+            url.setText(currentComic.getUrl());
+        }
+    }
+
     static class ComicCell extends ListCell<Comic> {
         @Override
         protected void updateItem(Comic item, boolean empty) {
             super.updateItem(item, empty);
-            if (!empty){
+            if (!empty) {
                 setText(item.getTitle());
             }
         }

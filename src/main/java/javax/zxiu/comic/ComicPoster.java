@@ -20,7 +20,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 
-import javax.zxiu.comic.api.GoogleCloudStorageAPI;
 import javax.zxiu.comic.api.Popo8API;
 import javax.zxiu.comic.api.TietukuAPI;
 import javax.zxiu.comic.bean.Library;
@@ -46,11 +45,6 @@ public class ComicPoster extends Application {
             System.exit(1);
         }
 
-
-        if (!true) {
-            GoogleCloudStorageAPI.test(null);
-            System.exit(1);
-        }
         TietukuAPI api = TietukuAPI.getInstance();
         if (!true) {
             File file = new File("download/你是我唯一的天使/你是我唯一的天使 第1话/1.jpg");
